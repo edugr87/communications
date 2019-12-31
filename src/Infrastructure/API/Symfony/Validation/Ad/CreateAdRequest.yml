@@ -1,0 +1,9 @@
+App\Application\Service\Ad\CreateAdService\CreateAdRequest:
+  properties:
+    text:
+      - NotBlank: ~
+      - NotNull: ~
+      - Type: string
+      - Length:
+          min: 1
+          max: 140

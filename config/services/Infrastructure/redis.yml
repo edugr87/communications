@@ -1,0 +1,26 @@
+snc_redis:
+  clients:
+    default:
+      type: predis
+      alias: default
+      dsn: '%env(APP_REDIS_DSN)%'
+      logging: '%kernel.debug%'
+    cluster:
+      type: predis
+      alias: cluster
+      dsns:
+        - '%env(APP_REDIS_DSN)%'
+      options:
+        prefix: '%env(APP_NAME)%_%env(APP_ENV)%_data_'
+        connection_timeout: 10
+        read_write_timeout: 30
+        iterable_multibulk: false
+        throw_errors: true
+  session:
+    client: default
+    prefix: '%env(APP_NAME)%_%env(APP_ENV)%_session_'
+    ttl: 3600
+
+framework:
+  session:
+    use_cookies: false

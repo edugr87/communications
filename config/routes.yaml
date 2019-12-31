@@ -1,0 +1,8 @@
+#index:
+#    path: /
+#    controller: App\Controller\DefaultController::index
+
+create_ad:
+  path:     /communications
+  defaults: { _controller: App\Infrastructure\API\Symfony\Controllers\Communications\GetCommunicationsController }
+  methods:  [GET]

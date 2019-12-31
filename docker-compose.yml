@@ -1,0 +1,30 @@
+version: "3"
+services:
+  apache_with_php:
+    container_name: ${APP_NAME}-apache
+    build: docker
+    ports:
+      - 80:80
+      - 443:443
+    volumes:
+      - .:/var/www/html/:cached
+    environment:
+      APP_NAME: prueba
+      PHP_OPCACHE_ENABLED: 1
+  mysql:
+    container_name: ${APP_NAME}-mysql
+    image: mysql:5.7
+    #command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - 3306:3306
+    volumes:
+      - .mysql:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: prueba
+
+  redis:
+    container_name: ${APP_NAME}-redis
+    image: redis:5.0.7
+    ports:
+      - "6379:6379"

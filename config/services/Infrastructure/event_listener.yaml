@@ -1,0 +1,15 @@
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+        public: false
+
+    request_listener:
+        class: App\Infrastructure\Logging\JsonRequestListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.request }
+
+    response_listener:
+        class: App\Infrastructure\Logging\JsonResponseListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.response }

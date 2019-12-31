@@ -1,0 +1,31 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+    public: true
+
+  App\Infrastructure\:
+    resource: '../../../src/Infrastructure/'
+    exclude: ['../../../src/Infrastructure/API/Symfony/{Model,EventListener,Request}','../../../src/Infrastructure/Persistence/Redis/RedisBaseRepository.php']
+    public: true
+    tags: ['controller.service_arguments']
+
+  GuzzleHttp\Client:
+    autowire: true
+
+  App\Domain\Model\Communications\CommunicationsRepository: '@App\Infrastructure\Rest\RestCommunicationsRepository'
+  App\Domain\Service\CacheInterface: '@App\Infrastructure\Persistence\Redis\RedisBaseRepository'
+
+  jms.serializer:
+    alias: JMS\Serializer\SerializerInterface
+    public: true
+
+  App\Infrastructure\Persistence\Redis\RedisBaseRepository:
+    class: App\Infrastructure\Persistence\Redis\RedisBaseRepository
+    arguments:
+      - '@snc_redis.cluster'
+      - '@jms.serializer'
+
+imports:
+  - { resource: 'redis.yml' }
+  - { resource: 'event_listener.yaml' }
