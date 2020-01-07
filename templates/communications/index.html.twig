@@ -1,0 +1,61 @@
+{% extends 'base.html.twig' %}
+{% block title %} Communications list {% endblock %}
+
+{% block body %}
+
+    <h1>Communications</h1>
+    {% if communications %}
+        <table class="table table-striped">
+            <thead>
+            <tr class="table-primary">
+                <th scope="col">Contact Number</th>
+                <th scope="col">SMS</th>
+                <th scope="col">CALLS</th>
+            </tr>
+            </thead>
+            <tbody>
+
+            {% for communication in  communications %}
+
+                {% for row in  communication %}
+                    <tr onMouseOver="this.style.color='#0e2782'"  onMouseOut="this.style.color='#000000'" data-toggle="collapse" data-target="#accordion" class="clickable">
+                        <td>
+                            {{ row.contactNumber }}
+
+                        <td>
+                            <div id="accordion" class="collapse">
+                                <ul class="list-group list-group-flush">
+                                    {% for data in  row.smss %}
+                                        <li class="list-group-item">
+                                            <p> entrante o saliente: {{ data.incoming }}</p>
+                                            <p> nombre: {{ data.name }}</p>
+                                            <p> fecha: {{ data.date | slice(0, -3)|date('d/m/Y h:m') }}</p>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </td>
+                        <td>
+                            <div id="accordion" class="collapse">
+                                <ul class="list-group list-group-flush">
+                                    {% for data in  row.calls %}
+                                        <li class="list-group-item">
+                                            <p> entrante o saliente: {{ data.incoming }}</p>
+                                            <p> nombre: {{ data.name }}</p>
+                                            <p> fecha: {{ data.date | slice(0, -3)|date('d/m/Y h:m') }}</p>
+                                            <p> duracion llamada: {{ data.duration | date('H:i:s', '+00:00 GMT')  }}</p>
+                                        </li>
+                                    {% endfor %}
+                                </ul>
+                            </div>
+                        </td>
+                    </tr>
+
+                {% endfor %}
+            {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p> no communications to display</p>
+    {% endif %}
+{% endblock %}

@@ -22,7 +22,7 @@ class GetCommunicationsController extends AbstractController
         $this->serializer = $serializer;
     }
 
-    public function __invoke(Request $request): JsonResponse
+    public function __invoke(Request $request)
     {
         $createAdRequest =
             new GetCommunicationsRequest(
@@ -32,6 +32,10 @@ class GetCommunicationsController extends AbstractController
         if ($response instanceof Communications) {
             $response = $this->serializer->serialize($response, 'json');
         }
-        return JsonResponse::fromJsonString($response);
+
+        return $this->render('communications/index.html.twig', ['communications' => json_decode($response, true)]);
+
+        //API Response
+        //return JsonResponse::fromJsonString($response);
     }
 }

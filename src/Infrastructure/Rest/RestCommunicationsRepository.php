@@ -38,9 +38,6 @@ class RestCommunicationsRepository implements CommunicationsRepository
     public function byNumber(string $name)
     {
       $response = $this->request($name);
-        for ($i = 1; $i <= 6; $i++) {
-            $response .= $response;
-        }
       return $response;
     }
 }
