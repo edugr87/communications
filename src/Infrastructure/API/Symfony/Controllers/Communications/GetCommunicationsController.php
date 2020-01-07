@@ -26,7 +26,7 @@ class GetCommunicationsController extends AbstractController
     {
         $createAdRequest =
             new GetCommunicationsRequest(
-                $request->request->get('number') ?? '6111111111'
+                $request->request->get('number')
             );
         $response = $this->getCommunicationsService->execute($createAdRequest);
         if ($response instanceof Communications) {
