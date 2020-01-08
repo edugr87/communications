@@ -1,4 +1,4 @@
-# Prueba SunMedia
+# Prueba
 #### Instalación 
 
 Añadir al /etc/host la siguiente linea:
