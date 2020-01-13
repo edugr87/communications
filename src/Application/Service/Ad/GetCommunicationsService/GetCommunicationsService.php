@@ -3,6 +3,7 @@
 namespace App\Application\Service\Ad\GetCommunicationsService;
 
 use App\Application\Service\ApplicationService;
+use App\Domain\Exceptions\EmptyCommunicationsException;
 use App\Domain\Model\Communications\Call;
 use App\Domain\Model\Communications\Communication;
 use App\Domain\Model\Communications\Communications;
@@ -25,10 +26,14 @@ final class GetCommunicationsService implements ApplicationService
     /**
      * @param GetCommunicationsRequest $request
      * @return Communications
+     * @throws EmptyCommunicationsException
      */
     public function execute($request = null)
     {
         $response = $this->communicationsRepository->byNumber($request->number());
+        if (empty($response)){
+            throw new EmptyCommunicationsException('Empty communications');
+        }
         $length = strlen($response);
 
         if ($this->redisBaseRepository->has($request->number() . '_' . $length)) {

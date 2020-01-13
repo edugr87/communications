@@ -2,7 +2,7 @@
 
 namespace App\Infrastructure\Rest;
 
-use App\Domain\Model\Communications\Communications;
+use App\Domain\Exceptions\NotSuccessfulRequestException;
 use App\Domain\Model\Communications\CommunicationsRepository;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
@@ -24,7 +24,7 @@ class RestCommunicationsRepository implements CommunicationsRepository
                 'http://gist.githubusercontent.com/miguelgf/e099e5e5bfde4f6428edb0ae94946c83/raw/fa27e59eb8f14ee131fca5c0c7332ff3b924e0b2'
             );
         } catch (ClientException $exception) {
-            //throw new PfsNotSuccessfulRequestException();
+            throw new NotSuccessfulRequestException('Error getting the data');
         }
         $body = $response->getBody()->getContents();
         return $body;

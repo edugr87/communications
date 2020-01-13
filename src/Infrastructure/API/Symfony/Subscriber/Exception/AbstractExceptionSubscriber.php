@@ -33,13 +33,6 @@ abstract class AbstractExceptionSubscriber
             'code' => $exception->getCode(),
         ];
 
-        if (1 === \getenv('APP_DEBUG')) {
-            $response = \array_merge($response, [
-                'class' => get_class($exception),
-                'file' => $exception->getFile(),
-            ]);
-        }
-
         $event->setResponse(new JsonResponse($response, 0 !== $exception->getCode() ?
                 $exception->getCode() :
                 $httpResponseCode)
